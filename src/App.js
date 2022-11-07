@@ -20,7 +20,7 @@ function onEnter(e){
                         if (
                           movieList.findIndex(movie=> movie.Title==data.Title)<0
                         ) {
-                            setMovieList(prev=>[...prev, data]);
+                            setMovieList(prev=>[data, ...prev]);
                         } else alert("You have already added this movie.");
                     } else
                         alert(
