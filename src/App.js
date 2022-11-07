@@ -50,12 +50,11 @@ function onEnter(e){
         />
         <section className="movies"></section>
         <section className="buttons">
-          <button className="btn-save">Save</button>
-          <button className="btn-reset">Reset</button>
+          <button className="btn-reset" onClick={()=>setMovieList([])}>Reset</button>
         </section>
       </main>
       {
-        movieList.map((data,idx)=> <View key={idx} data={data} />)
+        movieList?.map((data,idx)=> <View key={idx} data={data} />)
       }
     </div>
   );
