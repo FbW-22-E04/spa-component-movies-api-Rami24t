@@ -48,14 +48,15 @@ function onEnter(e){
           onChange={(e)=>setSearch(e.target.value)}
           onKeyDown={e=>{e.key === "Enter"? onEnter(e):''}}
         />
-        <section className="movies"></section>
         <section className="buttons">
           <button className="btn-reset" onClick={()=>setMovieList([])}>Reset</button>
         </section>
-      </main>
-      {
+        <section className="movies">
+        {
         movieList?.map((data,idx)=> <View key={idx} data={data} />)
       }
+        </section>
+      </main>
     </div>
   );
 }

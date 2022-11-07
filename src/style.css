@@ -55,6 +55,10 @@ p {
 .movie-meta {
   border-bottom: 1px solid black;
   margin-bottom: 0.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 
 .buttons {
