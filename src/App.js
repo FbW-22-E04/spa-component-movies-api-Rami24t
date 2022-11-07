@@ -13,41 +13,37 @@ export default function App() {
   let data;
 
 
-  function getData(){
-    data = client.getMovieData('movi').then((data) => {
+  function getData(search){
+    let data = client.getMovieData(search).then((data) => {
       if (!(data.Response === "False"))
         setMovieList([...movieList,data]);
   }).catch(error => alert("Error loading a movie: ", error));
-
   }
 
 
   useEffect(
     ()=>{
-      data = client.getMovieData('movi').then((data) => {
-        if (!(data.Response === "False"))
-          setMovieList([...movieList,data]);
-    }).catch(error => alert("Error loading a movie: ", error));
-
-    const input = document.querySelector("#input");
-    input.addEventListener("keypress", (e) => {
+      getData('love');
+      
+      const input = document.querySelector("#input");
+      const eL1 = input.addEventListener("keypress", (e) => {
         // add movie
         if (e.key === "Enter") {
-            let movie = input.value.toLowerCase();
+            let movie = search.toLowerCase();
             if (movie)
                 try {
                     client.getMovieData(movie).then((data) => {
                         if (data && !(data.Response === "False")) {
-                            if (!list.includes(data.Title)) {
-                                list.push(data.Title);
-                                console.log(typeof data.Response);
-                                view.displayMovieOnPage(data);
+                            if (!movieList.includes(data)) {
+                                setMovieList([...movieList, data]);
+//                                console.log(typeof data.Response);
+//                                view.displayMovieOnPage(data);
                             } else alert("You have already added this movie.");
                         } else
                             alert(
                                 `${JSON.stringify(data.Error)}\nSorry, ${movie} movie was not found!`
                             );
-                        input.value = "";
+                        setSearch("");
                     });
                 } catch (error) {
                     alert(`Error adding movie: ${error}`);
@@ -68,7 +64,9 @@ export default function App() {
           localStorage.removeItem("list");
           // view.removeDisplay();
       }
-  });  
+  });
+
+  return ()=> input.removeEventListener("click", eL1);
 }
   ,[])
 
