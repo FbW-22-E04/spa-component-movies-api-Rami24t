@@ -11,8 +11,12 @@ export default function App() {
 
   useEffect( ()=>
   {
-    if(localStorage?.getItem('list') && localStorage?.getItem('list')[0])
-    getMovie((JSON.parse(localStorage?.getItem('list'))));
+    const ls = localStorage.getItem('list');
+    if(!ls)
+      return
+    const lsJson = JSON.parse(ls);
+    if(lsJson && lsJson.length)
+    getMovie((JSON.parse(ls)));
   }
 ,[])
 
@@ -46,21 +50,17 @@ export default function App() {
     for(const item of search)
     try {
       console.log('clicked Enter')
-        client.getMovieData(item.toLowerCase()).then((data) => {
-            if (data && !(data.Response === "False")) {
-                if (
-                  movieList.findIndex(movie=> movie.Title==data.Title)<0
-                ) {
-                    movies.push(data);
-                } else console.log("You have already added this movie.");
-            } else
-                alert(
-                    `${JSON.stringify(data.Error)}\nSorry, ${item} movie was not found!`
-                );
+        const promise = client.getMovieData(item.toLowerCase());
+                    movies.push(promise);
                 if(search.length-1 === search.lastIndexOf(item))
-            setMovieList([...movies]);
-        });
-    } catch (error) {
+                {
+                  Promise.all(movies).then(values=>{ console.log(values); 
+                    values = values.filter(value=>value.Title);
+                    setMovieList(values)});
+                  console.log(search.length-1);
+                }
+        }
+      catch (error) {
         alert(`Error adding movie: ${error}`);
     }
   }
