@@ -49,7 +49,7 @@ export default function App() {
     {const movies=[];
     for(const item of search)
     try {
-      console.log('clicked Enter')
+      console.log('loading movie ' + item +' from API')
         const promise = client.getMovieData(item.toLowerCase());
                     movies.push(promise);
                 if(search.length-1 === search.lastIndexOf(item))
