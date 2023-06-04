@@ -57,6 +57,7 @@ p {
 .movie-meta {
   border-bottom: 1px solid black;
   margin-bottom: 0.25rem;
+  overflow: hidden;
 }
 
 .buttons {
@@ -83,4 +84,10 @@ cursor: pointer;
 .btn-save:active, .btn-reset:active {
   transform: scale(0.9);
   box-shadow: none;
+}
+img{
+  width: 90%;
+  margin: auto;
+  display: block;
+  margin: 12px;
 }
